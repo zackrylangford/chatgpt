@@ -1,16 +1,25 @@
 import openai
+from functions import append_user_input
 
+# OpenAI settings
 openai.api_key = "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"
-
 model_engine = "text-davinci-003"
 
-zackry = "\nZackry: "
 
-prompt = input(zackry)
+# My Settings
+username = "Zackry"
+ai_username = "August"
 
+
+# Initial Prompt
+prompt = input(f"\n{username}:")
+
+# Conversation Loop
 while prompt != '--quit':
     
-    
+    # Add user input to database
+    append_user_input("sample.txt", prompt)
+
     if prompt != '-quit':
         completion = openai.Completion.create(
             engine=model_engine,
@@ -31,5 +40,11 @@ while prompt != '--quit':
 
 
     response = completion.choices[0].text
-    print(f"\nMarcus: {response.strip()}")
-    prompt = input(zackry)
+    print(f"\n{ai_username}: {response.strip()}")
+    
+    #Add Marcus output to database
+
+    prompt = input(f"\n{username}")
+
+
+
