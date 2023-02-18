@@ -1,8 +1,9 @@
+#import os
+#import psycopg2
 import openai
-from functions import append_user_input
-
+from functions import append_chat_logs
 # OpenAI settings
-openai.api_key = "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"
+openai.api_key = ""
 model_engine = "text-davinci-003"
 
 
@@ -12,15 +13,12 @@ ai_username = "August"
 
 
 # Initial Prompt
-prompt = input(f"\n{username}:")
+prompt = input(f"\n{username}: ")
+
 
 # Conversation Loop
 while prompt != '--quit':
-    
-    # Add user input to database
-    append_user_input("sample.txt", prompt)
 
-    if prompt != '-quit':
         completion = openai.Completion.create(
             engine=model_engine,
             prompt=prompt,
@@ -37,14 +35,18 @@ while prompt != '--quit':
             #Randomness/creativity setting - higher = more random and open (up to .09)
             temperature=0.8
         )
+        # ChatGPT's response
+        response = completion.choices[0].text
 
-
-    response = completion.choices[0].text
-    print(f"\n{ai_username}: {response.strip()}")
+        # Print the response from ChatGPT in the terminal
+        print(f"\n{ai_username}: {response.strip()}")
     
-    #Add Marcus output to database
+        # Add conversation to txt logs
+        append_chat_logs("/home/zack/Desktop/GitHub/Private/august-gpt/documents/chat-logs.txt", prompt, response.strip())
 
-    prompt = input(f"\n{username}")
+
+        # Restart the prompt
+        prompt = input(f"\n{username}: ")
 
 
 
