@@ -1,5 +1,11 @@
+from docx import Document
+
+
+
+
 
 #Save conversation between user and chatgpt to txt file
+
 
 def append_chat_logs(file_name, prompt, response):
 	file_in = open(file_name, 'a')

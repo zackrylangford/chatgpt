@@ -1,9 +1,10 @@
 #import os
 #import psycopg2
 import openai
+from docx import Document
 from functions import append_chat_logs
 # OpenAI settings
-openai.api_key = ""
+openai.api_key = "yourapikey"
 model_engine = "text-davinci-003"
 
 
@@ -42,8 +43,7 @@ while prompt != '--quit':
         print(f"\n{ai_username}: {response.strip()}")
     
         # Add conversation to txt logs
-        append_chat_logs("/home/zack/Desktop/GitHub/Private/august-gpt/documents/chat-logs.txt", prompt, response.strip())
-
+        append_chat_logs("", prompt, response.strip())
 
         # Restart the prompt
         prompt = input(f"\n{username}: ")
